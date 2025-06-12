@@ -1,0 +1,82 @@
+-- Enable required extensions
+create extension if not exists "uuid-ossp";
+
+-- Create the profiles table
+create table if not exists public.profiles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+
+  created_at timestamptz default timezone('utc'::text, now()),
+
+  first_name text,
+  middle_name text,
+  last_name text,
+  date_of_birth date,
+  gender text,
+  state text,
+  lga text,
+  phone_number text,
+  state_of_origin text,
+  voting_engagement_state text,
+  is_registered text,
+  registration_date text,
+  registration_status text,
+  likely_to_vote text,
+  has_internet_access text,
+  is_smartphone_user text,
+  vote_impact text,
+  trust_in_election_body text,
+  additional_comments text,
+  profile_picture_url text,
+  referrer_name text,
+  party_affiliation text,
+  preferred_presidential_candidate text,
+  preferred_governor_candidate text,
+  preferred_senate_candidate text,
+  preferred_rep_candidate text,
+  top_political_issue text,
+  is_volunteering text,
+  is_canvassing text,
+
+  attended_events boolean,
+  past_election_participation boolean,
+  preferred_method_of_communication text[],
+  ethnicity text,
+  religion text,
+  occupation text,
+  level_of_education text,
+  marital_status text,
+  household_size text,
+  income_bracket text,
+
+  email text,
+  voting_history int8[],
+  preferred_social_media text[],
+  election_concerns text[],
+  has_onboarded boolean,
+  age_range text,
+  member_id text,
+  member_status text,
+  position text,
+  top_political_issues text[],
+  role text,
+  referral_code text,
+  add_to_newsletter boolean,
+  is_verified_user boolean,
+  is_active boolean,
+  country_code text,
+  ward text
+);
+
+-- Auto update timestamp on update
+create or replace function update_profiles_updated_at()
+returns trigger as $$
+begin
+  new.created_at = now();
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger update_profiles_set_updated_at
+before update on public.profiles
+for each row
+execute procedure update_profiles_updated_at();
