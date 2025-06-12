@@ -27,7 +27,7 @@ const ConfirmModal = ({ isOpen, onClose, onConfirm, title, message }: ConfirmMod
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-1 z-80 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-2 z-80 flex items-center justify-center bg-black/50">
       <div className="bg-white rounded-lg p-6 w-96 max-w-[90%] shadow-xl">
         <h3 className="text-lg font-semibold mb-2">{title}</h3>
         <p className="text-gray-600 mb-6">{message}</p>
