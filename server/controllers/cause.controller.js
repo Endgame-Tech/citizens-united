@@ -139,14 +139,34 @@ export const getOwnedCauses = async (req, res) => {
   }
 };
 
+// Import our cloudinary upload utility
+import { uploadBufferToCloudinary } from '../utils/cloudinaryUpload.js';
+
 // Upload Banner Image 
 export const uploadCauseBannerImage = async (req, res) => {
   try {
-    const fileStr = req.file.path;
-    const result = await cloudinary.uploader.upload(fileStr, {
-      folder: 'cause_banners',
-      transformation: [{ width: 1200, height: 675, crop: 'fill' }],
-    });
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    let result;
+
+    if (req.file.buffer) {
+      // Serverless environment - upload buffer directly
+      result = await uploadBufferToCloudinary(req.file.buffer, {
+        folder: 'cause_banners',
+        transformation: [{ width: 1200, height: 675, crop: 'fill' }]
+      });
+    } else if (req.file.path) {
+      // Development environment - upload from path
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'cause_banners',
+        transformation: [{ width: 1200, height: 675, crop: 'fill' }]
+      });
+    } else {
+      return res.status(400).json({ error: 'Invalid file format' });
+    }
+
     return res.status(200).json({ url: result.secure_url });
   } catch (err) {
     console.error('Upload error', err);
@@ -157,11 +177,28 @@ export const uploadCauseBannerImage = async (req, res) => {
 // Upload Rich Description Image
 export const uploadRichDescriptionImage = async (req, res) => {
   try {
-    const fileStr = req.file.path;
-    const result = await cloudinary.uploader.upload(fileStr, {
-      folder: 'rich_description_images',
-      transformation: [{ width: 1200, height: 675, crop: 'fill' }],
-    });
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    let result;
+
+    if (req.file.buffer) {
+      // Serverless environment - upload buffer directly
+      result = await uploadBufferToCloudinary(req.file.buffer, {
+        folder: 'rich_description_images',
+        transformation: [{ width: 1200, height: 675, crop: 'fill' }]
+      });
+    } else if (req.file.path) {
+      // Development environment - upload from path
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'rich_description_images',
+        transformation: [{ width: 1200, height: 675, crop: 'fill' }]
+      });
+    } else {
+      return res.status(400).json({ error: 'Invalid file format' });
+    }
+
     return res.status(200).json({ url: result.secure_url });
   } catch (err) {
     console.error('Upload error', err);

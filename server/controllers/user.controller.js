@@ -1,14 +1,33 @@
 import cloudinary from '../config/cloudinary.js';
 import User from '../models/user.model.js';
 
+import { uploadBufferToCloudinary } from '../utils/cloudinaryUpload.js';
+
 export const uploadProfileImage = async (req, res) => {
   try {
-    const fileStr = req.file.path; // using multer to temp store
-    const result = await cloudinary.uploader.upload(fileStr, {
-      folder: 'profile_images',
-      transformation: [{ width: 500, height: 500, crop: 'fill' }]
-    });
-    // cleanup multer temp file if needed
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    let result;
+
+    if (req.file.buffer) {
+      // Serverless environment - upload buffer directly
+      result = await uploadBufferToCloudinary(req.file.buffer, {
+        folder: 'profile_images',
+        transformation: [{ width: 500, height: 500, crop: 'fill' }]
+      });
+    } else if (req.file.path) {
+      // Development environment - upload from path
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'profile_images',
+        transformation: [{ width: 500, height: 500, crop: 'fill' }]
+      });
+    } else {
+      return res.status(400).json({ error: 'Invalid file format' });
+    }
+
+    // Update user's profile image URL
     await User.findByIdAndUpdate(req.userId, { profileImage: result.secure_url });
     return res.json({ url: result.secure_url });
   } catch (err) {

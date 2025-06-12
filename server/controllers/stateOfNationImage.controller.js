@@ -12,19 +12,35 @@ export const getAllImages = async (req, res) => {
   }
 };
 
+import { uploadBufferToCloudinary } from '../utils/cloudinaryUpload.js';
+
 export const uploadImage = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
-    // Compress client-side before upload; just upload here
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "citizens-united/state-of-nation",
-    });
+
+    let result;
+
+    if (req.file.buffer) {
+      // Serverless environment - upload buffer directly
+      result = await uploadBufferToCloudinary(req.file.buffer, {
+        folder: "citizens-united/state-of-nation"
+      });
+    } else if (req.file.path) {
+      // Development environment - upload from path
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "citizens-united/state-of-nation"
+      });
+    } else {
+      return res.status(400).json({ error: 'Invalid file format' });
+    }
+
     const newImage = await StateOfNationImage.create({
       imageUrl: result.secure_url,
       uploadedBy: req.user._id,
     });
     res.status(201).json(newImage);
   } catch (err) {
+    console.error('Upload error:', err);
     res.status(500).json({ message: "Upload failed" });
   }
 };
@@ -54,9 +70,21 @@ export const updateImage = async (req, res) => {
     }
 
     // Upload new image to cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "citizens-united/state-of-nation",
-    });
+    let result;
+
+    if (req.file.buffer) {
+      // Serverless environment - upload buffer directly
+      result = await uploadBufferToCloudinary(req.file.buffer, {
+        folder: "citizens-united/state-of-nation"
+      });
+    } else if (req.file.path) {
+      // Development environment - upload from path
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "citizens-united/state-of-nation"
+      });
+    } else {
+      return res.status(400).json({ error: 'Invalid file format' });
+    }
 
     // Update the image record
     const updatedImage = await StateOfNationImage.findByIdAndUpdate(

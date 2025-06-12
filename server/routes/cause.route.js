@@ -1,5 +1,4 @@
 import express from 'express';
-import multer from 'multer';
 import {
   createCause,
   joinCause,
@@ -15,9 +14,9 @@ import {
 } from '../controllers/cause.controller.js';
 
 import { protect } from '../middlewares/auth.middleware.js';
+import { parseFileUpload } from '../utils/cloudinaryUpload.js';
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
 
 // Get all causes in the platform
 router.get('/', getAllCauses);
@@ -43,9 +42,10 @@ router.patch('/:id', protect, updateCause);
 // Get a single cause by ID
 router.get('/:id', protect, getCauseById);
 
-router.post('/upload-image', protect, upload.single('file'), uploadCauseBannerImage);
+// Upload routes using serverless-compatible middleware
+router.post('/upload-image', protect, parseFileUpload('file'), uploadCauseBannerImage);
 
-router.post('/upload-rich-description-image', protect, upload.single('file'), uploadRichDescriptionImage);
+router.post('/upload-rich-description-image', protect, parseFileUpload('file'), uploadRichDescriptionImage);
 
 router.get('/code/:code', getCauseByJoinCode);
 

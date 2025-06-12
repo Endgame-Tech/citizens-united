@@ -14,13 +14,32 @@ export const createAdvocacy = async (req, res) => {
   res.status(201).json(advocacy);
 };
 
+import { uploadBufferToCloudinary } from '../utils/cloudinaryUpload.js';
+
 export const uploadAdvocacyImage = async (req, res) => {
   try {
-    const fileStr = req.file.path;
-    const result = await cloudinary.uploader.upload(fileStr, {
-      folder: 'advocacy_images',
-      transformation: [{ width: 1200, height: 675, crop: 'fill' }],
-    });
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    let result;
+
+    if (req.file.buffer) {
+      // Serverless environment - upload buffer directly
+      result = await uploadBufferToCloudinary(req.file.buffer, {
+        folder: 'advocacy_images',
+        transformation: [{ width: 1200, height: 675, crop: 'fill' }]
+      });
+    } else if (req.file.path) {
+      // Development environment - upload from path
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'advocacy_images',
+        transformation: [{ width: 1200, height: 675, crop: 'fill' }]
+      });
+    } else {
+      return res.status(400).json({ error: 'Invalid file format' });
+    }
+
     return res.status(200).json({ url: result.secure_url });
   } catch (err) {
     console.error('Upload error', err);
