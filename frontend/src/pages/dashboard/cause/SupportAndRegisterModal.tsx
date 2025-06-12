@@ -4,7 +4,7 @@ import Toast from '../../../components/Toast';
 import { registerUser, loginUser } from '../../../services/authService';
 import { Eye, EyeOff } from 'lucide-react';
 
-export default function SupportAndRegisterModal({ code, onClose, onSupportSuccess }: { code: string, onClose: () => void, onSupportSuccess: () => void }) {
+export default function SupportAndRegisterModal({ code, onClose }: { code: string, onClose: () => void, onSupportSuccess: () => void }) {
   const [form, setForm] = useState({
     name: '',
     email: '',

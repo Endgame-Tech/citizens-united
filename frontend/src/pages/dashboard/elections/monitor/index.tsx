@@ -1,12 +1,10 @@
 // pages/monitor/index.tsx
-import { useNavigate } from 'react-router';
 // import { FileText, MapPin, CheckCircle, AlertTriangle } from 'lucide-react';
-import MonitorHero from './components/MonitorHero';
+// import MonitorHero from './components/MonitorHero';
 import MonitorCTA from './components/MonitorCTA';
 // import SectionCard from './components/SectionCard';
 
 export default function MonitorHomePage() {
-  const navigate = useNavigate();
 
   // const sections = [
   //   {

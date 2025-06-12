@@ -11,7 +11,7 @@ type Witness = {
   consent: string;
 };
 
-export default function WitnessInfo({ formData, setFormData, onNext }: WitnessInfoProps) {
+export default function WitnessInfo({ formData, onNext }: WitnessInfoProps) {
   const [witnesses, setWitnesses] = useState(formData.incidentWitnesses || [{ name: '', phone: '', consent: '' }]);
 
   const handleChange = (index: number, field: string, value: string) => {

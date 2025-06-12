@@ -27,7 +27,6 @@ export default function NewAdvocacyModal({ isOpen, onClose, onSuccess }: Props) 
   const [toastInfo, setToastInfo] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const modalRef = useRef<HTMLDivElement>(null);
-  const [imageUrl, setImageUrl] = useState('');
   const [fileSrc, setFileSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -87,7 +86,7 @@ export default function NewAdvocacyModal({ isOpen, onClose, onSuccess }: Props) 
     reader.onload = () => setFileSrc(reader.result as string);
   };
 
-  const onCropComplete = (area: any, areaPixels: any) => {
+  const onCropComplete = (_: any, areaPixels: any) => {
     setCroppedArea(areaPixels);
   };
 
@@ -103,7 +102,6 @@ export default function NewAdvocacyModal({ isOpen, onClose, onSuccess }: Props) 
         withCredentials: true,
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      setImageUrl(res.data.url);
       setForm({ ...form, displayImage: res.data.url });
       setFileSrc(null);
       setToastInfo({ message: 'Image uploaded', type: 'success' });

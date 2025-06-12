@@ -6,7 +6,7 @@ interface Props {
   onNext: (data: { selfieBlob: Blob; selfiePreviewUrl: string }) => void;
 }
 
-export default function KYCFormStepSelfie({ initialData, onNext }: Props) {
+export default function KYCFormStepSelfie({ onNext }: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);

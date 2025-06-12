@@ -36,7 +36,7 @@ const irregularityOptions = [
   "Other",
 ];
 
-export default function IncidentDetails({ onNext, formData, setFormData }: IncidentDetailsProps) {
+export default function IncidentDetails({ onNext, setFormData }: IncidentDetailsProps) {
   const [details, setDetails] = useState<IncidentDetails>({
     officerName: '',
     date: '',

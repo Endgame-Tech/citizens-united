@@ -7,7 +7,7 @@ interface ContextualNotesProps {
   setFormData: (data: any) => void;
 }
 
-export default function ContextualNotes({ onNext, formData, setFormData }: ContextualNotesProps) {
+export default function ContextualNotes({ onNext, formData }: ContextualNotesProps) {
   const [votingStarted, setVotingStarted] = useState(formData.officerArrival?.votingStarted || '');
   const [actualStartTime, setActualStartTime] = useState(formData.officerArrival?.actualStartTime || '');
   const [materialsPresent, setMaterialsPresent] = useState<string[]>(formData.officerArrival?.materialsPresent || []);

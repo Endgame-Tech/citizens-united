@@ -77,7 +77,7 @@ export default function NewCauseModal({ isOpen, onClose, onSuccess, causeType }:
     setForm({ ...form, [field]: form[field].filter((_, i) => i !== index) });
   };
 
-  const onCropComplete = (area: any, areaPixels: any) => {
+  const onCropComplete = (_: any, areaPixels: any) => {
     setCroppedArea(areaPixels);
   };
 

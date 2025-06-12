@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation, Link } from "react-router";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router";
 import Toast from "../../components/Toast.js";
 import {
   CheckCircleIcon,
@@ -10,12 +10,8 @@ import { XCircleIcon } from "@heroicons/react/24/outline";
 import validatePassword from "../../utils/validatePassword.js";
 import { registerUser } from "../../services/authService.js";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-
 const GetStartedPage = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // get access to URL
-  const [referralCode, setReferralCode] = useState(""); // store ref code
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,14 +24,14 @@ const GetStartedPage = () => {
   const [showToast, setShowToast] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // Extract referral code from URL
-    const params = new URLSearchParams(location.search);
-    const ref = params.get("ref");
-    if (ref) {
-      setReferralCode(ref);
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   // Extract referral code from URL
+  //   const params = new URLSearchParams(location.search);
+  //   const ref = params.get("ref");
+  //   if (ref) {
+  //     setReferralCode(ref);
+  //   }
+  // }, [location]);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

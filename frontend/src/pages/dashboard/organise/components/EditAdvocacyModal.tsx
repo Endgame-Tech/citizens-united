@@ -78,7 +78,7 @@ export default function EditAdvocacyModal({ isOpen, advocacy, onClose, onSuccess
     reader.onload = () => setFileSrc(reader.result as string);
   };
 
-  const onCropComplete = (area: any, areaPixels: any) => {
+  const onCropComplete = (_: any, areaPixels: any) => {
     setCroppedArea(areaPixels);
   };
 

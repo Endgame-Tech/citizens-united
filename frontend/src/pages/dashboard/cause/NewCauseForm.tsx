@@ -16,6 +16,7 @@ export default function NewCauseForm({ defaultCauseType = 'demand', onSuccess }:
     richDescription: '',
     goals: [] as string[],
     targets: [] as string[],
+    partners: [] as string[],
     causeType: '',
     scope: '',
     location: { state: '', lga: '', ward: '' },
@@ -60,7 +61,7 @@ export default function NewCauseForm({ defaultCauseType = 'demand', onSuccess }:
     setForm({ ...form, [field]: form[field].filter((_, i) => i !== index) });
   };
 
-  const onCropComplete = (area: any, areaPixels: any) => {
+  const onCropComplete = (_: any, areaPixels: any) => {
     setCroppedArea(areaPixels);
   };
 

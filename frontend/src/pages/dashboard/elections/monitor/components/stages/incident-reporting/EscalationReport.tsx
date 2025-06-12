@@ -6,7 +6,7 @@ interface EscalationReportProps {
   onNext: (data: any) => void;
 }
 
-export default function EscalationReport({ formData, setFormData, onNext }: EscalationReportProps) {
+export default function EscalationReport({ formData, onNext }: EscalationReportProps) {
   const [reportedTo, setReportedTo] = useState(formData.reportedToAuthorities || '');
   const [additionalNotes, setAdditionalNotes] = useState(formData.additionalNotes || '');
 

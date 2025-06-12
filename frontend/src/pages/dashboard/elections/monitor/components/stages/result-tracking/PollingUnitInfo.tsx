@@ -17,7 +17,7 @@ interface PollingUnitInfoProps {
   setFormData: (data: any) => void;
 }
 
-export default function PollingUnitInfo({ onNext, formData, setFormData }: PollingUnitInfoProps) {
+export default function PollingUnitInfo({ onNext, formData }: PollingUnitInfoProps) {
   const [data, setData] = useState<PollingUnitData>(
     formData.resultTracking?.pollingInfo || {
       officerName: "",

@@ -465,7 +465,6 @@ export default function PublicCauseDetail() {
             </button>
             <button
               onClick={() => {
-                const url = encodeURIComponent(window.location.href);
                 const subject = encodeURIComponent(cause.name || 'Join this cause');
                 const body = encodeURIComponent(`I thought you might be interested in this cause: ${window.location.href}`);
                 window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
