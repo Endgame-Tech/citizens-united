@@ -65,13 +65,13 @@ const LandingNavbar = () => {
             // Not logged in - show login & register
             <>
               <Link
-                to="/login"
+                to="/auth/login"
                 className="py-2 px-4 rounded-lg border border-green-700 text-green-700 hover:bg-green-50 transition-colors"
               >
                 Login
               </Link>
               <Link
-                to="/register"
+                to="/auth/sign-up"
                 className="py-2 px-4 rounded-lg bg-green-700 hover:bg-green-800 text-white transition-colors"
               >
                 Register

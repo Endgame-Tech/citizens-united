@@ -87,6 +87,6 @@ export default {
     },
   },
   plugins: [
-    require('tailwind-scrollbar')({ nocompatible: true }),
+    // Removed tailwind-scrollbar plugin
   ],
 };
