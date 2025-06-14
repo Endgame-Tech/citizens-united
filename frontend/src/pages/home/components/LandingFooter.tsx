@@ -78,8 +78,8 @@ const LandingFooter = () => {
             <ul className="space-y-3">
               <li className="flex items-center">
                 <MailIcon className="w-5 h-5 mr-2" />
-                <a href="mailto:info@citizensunitednigeria.org" className="text-gray-700 hover:text-green-600 transition-colors">
-                  info@citizensunitednigeria.org
+                <a href="mailto:hello@citizensunitednigeria.org" className="text-gray-700 hover:text-green-600 transition-colors">
+                  hello@citizensunitednigeria.org
                 </a>
               </li>
               <li className="flex items-center">
