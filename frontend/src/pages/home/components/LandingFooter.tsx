@@ -84,8 +84,8 @@ const LandingFooter = () => {
               </li>
               <li className="flex items-center">
                 <WebIcon className="w-5 h-5 mr-2" />
-                <a href="https://www.citizensunited.ng" className="text-gray-700 hover:text-green-600 transition-colors" target="_blank" rel="noopener noreferrer">
-                  www.citizensunited.ng
+                <a href="https://www.citizensunitednigeria.org" className="text-gray-700 hover:text-green-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                  www.citizensunitednigeria.org
                 </a>
               </li>
             </ul>
